@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS users (
 -- Profile
 -- ==========================================
 
-CREATE TABLE IF NOT EXISTS profile (
+CREATE TABLE IF NOT EXISTS profiles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(100) NOT NULL,
     profession VARCHAR(100) NOT NULL,
@@ -43,15 +43,25 @@ CREATE TABLE IF NOT EXISTS profile (
 -- ==========================================
 -- Skills
 -- ==========================================
+CREATE TABLE skills(
 
-CREATE TABLE IF NOT EXISTS skills (
     id INT AUTO_INCREMENT PRIMARY KEY,
+
     name VARCHAR(100) NOT NULL,
+
+    category VARCHAR(100) NOT NULL,
+
     icon VARCHAR(255),
-    display_order INT DEFAULT 1,
+
+    level INT NOT NULL,
+
+    sort_order INT DEFAULT 0,
+
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        ON UPDATE CURRENT_TIMESTAMP
+    ON UPDATE CURRENT_TIMESTAMP
+
 );
 
 -- ==========================================
@@ -66,7 +76,7 @@ CREATE TABLE IF NOT EXISTS projects (
     technologies TEXT,
     github_url VARCHAR(255),
     live_demo_url VARCHAR(255),
-    status ENUM('Published','Coming Soon','Draft')
+     status ENUM('Published','Coming Soon','Draft')
         DEFAULT 'Draft',
     display_order INT DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -78,45 +88,73 @@ CREATE TABLE IF NOT EXISTS projects (
 -- Experiences
 -- ==========================================
 
-CREATE TABLE IF NOT EXISTS experiences (
+CREATE TABLE  IF NOT EXISTS experiences(
+
     id INT AUTO_INCREMENT PRIMARY KEY,
-    company VARCHAR(255),
-    position VARCHAR(255),
-    description TEXT,
-    start_date DATE,
+
+    company VARCHAR(150) NOT NULL,
+
+    position VARCHAR(150) NOT NULL,
+
+    location VARCHAR(150),
+
+    employment_type VARCHAR(50),
+
+    start_date DATE NOT NULL,
+
     end_date DATE,
+
     is_current BOOLEAN DEFAULT FALSE,
-    display_order INT DEFAULT 1,
+
+    description TEXT,
+
+    technologies VARCHAR(255),
+
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        ON UPDATE CURRENT_TIMESTAMP
+    ON UPDATE CURRENT_TIMESTAMP
+
 );
 
 -- ==========================================
 -- Social Links
 -- ==========================================
 
-CREATE TABLE IF NOT EXISTS social_links (
+CREATE TABLE IF NOT EXISTS social_links(
+
     id INT AUTO_INCREMENT PRIMARY KEY,
-    platform VARCHAR(100) NOT NULL,
-    url VARCHAR(255) NOT NULL,
+
+    platform VARCHAR(50),
+
+    url VARCHAR(255),
+
     icon VARCHAR(100),
-    display_order INT DEFAULT 1,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        ON UPDATE CURRENT_TIMESTAMP
+
+    sort_order INT DEFAULT 0,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
 );
 
 -- ==========================================
 -- Contact Messages
 -- ==========================================
 
-CREATE TABLE IF NOT EXISTS contact_messages (
+CREATE TABLE  IF NOT EXISTS contacts(
+
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    subject VARCHAR(255) NOT NULL,
-    message TEXT NOT NULL,
+
+    name VARCHAR(100),
+
+    email VARCHAR(150),
+
+    subject VARCHAR(200),
+
+    message TEXT,
+
     is_read BOOLEAN DEFAULT FALSE,
+
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
 );

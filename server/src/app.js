@@ -1,27 +1,53 @@
-const express = require("express");// Import the Express library to create a router for handling authentication routes
-const authRoutes = require("./routes/authRoutes"); // Import the authentication routes defined in the authRoutes.js file
+const express = require("express");
+const helmet = require("helmet");
+const cors = require("cors");
+const compression = require("compression");
+
 const app = express();
-//  projectRoutes register
-const projectRoutes = require("./routes/projectRoutes"); // Import the project routes defined in the projectRoutes.js file
-app.use(express.json()); // Middleware to parse incoming JSON requests and make the data available in req.body
-app.use("/api/auth", authRoutes);// Mount the authentication routes under the "/api/auth" path, so that requests to this path will be handled by the authRoutes router
-app.use("/api/projects",projectRoutes); // Mount the project routes under the "/api/projects" path, so that requests to this path will be handled by the projectRoutes router
-app.get("/", (req, res) => {
-  res.send("Addidu's Portfolio CMS API is running...");
-});
-const errorHandler = require("./middlewares/errorHandler");
-const dashboardRoutes =
-require("./routes/dashboardRoutes");
 
-app.use("/api/dashboard", dashboardRoutes);
+// ==========================
+// Global Middleware
+// ==========================
+app.use(helmet());
+app.use(cors());
+app.use(compression());
+app.use(express.json());
 
-// Routes
+// ==========================
+// Route Imports
+// ==========================
+const authRoutes = require("./routes/authRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
+const profileRoutes = require("./routes/profileRoutes");
+const projectRoutes = require("./routes/projectRoutes");
+const skillRoutes = require("./routes/skillRoutes");
+const experienceRoutes = require("./routes/experienceRoutes");
+const contactRoutes = require("./routes/contactRoutes");
+const publicRoutes = require("./routes/publicRoutes");
+
+// ==========================
+// API Routes
+// ==========================
 app.use("/api/auth", authRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/profile", profileRoutes);
+app.use("/api/projects", projectRoutes);
+app.use("/api/skills", skillRoutes);
+app.use("/api/experiences", experienceRoutes);
+app.use("/api/contacts", contactRoutes);
+app.use("/api/public", publicRoutes);
 
-// Error Handler (always last)
+// ==========================
+// Home Route
+// ==========================
+app.get("/", (req, res) => {
+    res.send("Addisu's Portfolio CMS API is running...");
+});
+
+// ==========================
+// Global Error Handler
+// ==========================
+const errorHandler = require("./middlewares/errorHandler");
 app.use(errorHandler);
- 
-module.exports =app;
- 
- 
- 
+
+module.exports = app;

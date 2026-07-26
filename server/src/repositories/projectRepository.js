@@ -11,10 +11,9 @@ class ProjectRepository {
                 description,
                 image,
                 github_url,
-                live_url,
+                live_demo_url,
                 technologies,
-                is_featured,
-                display_order
+                 display_order
             )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `;
@@ -24,10 +23,9 @@ class ProjectRepository {
             project.description,
             project.image,
             project.github_url,
-            project.live_url,
+            project.live_demo_url,
             project.technologies,
-            project.is_featured,
-            project.display_order
+             project.display_order
         ]);
 
         return result.insertId;
@@ -71,10 +69,9 @@ class ProjectRepository {
                 description = ?,
                 image = ?,
                 github_url = ?,
-                live_url = ?,
+                live_demo_url = ?,
                 technologies = ?,
-                is_featured = ?,
-                display_order = ?
+                 display_order = ?
             WHERE id = ?
         `;
 
@@ -83,10 +80,9 @@ class ProjectRepository {
             project.description,
             project.image,
             project.github_url,
-            project.live_url,
+            project.live_demo_url,
             project.technologies,
-            project.is_featured,
-            project.display_order,
+             project.display_order,
             id
         ]);
     }
@@ -111,11 +107,7 @@ class ProjectRepository {
         `;
 
         const values = [];
-
-        if (filters.is_featured !== undefined) {
-            sql += ` AND is_featured = ?`;
-            values.push(filters.is_featured);
-        }
+ 
 
         sql += ` ORDER BY display_order ASC, created_at DESC`;
 
@@ -162,14 +154,6 @@ class ProjectRepository {
         `;
 
         const values = [];
-
-        if (filters.featured !== undefined) {
-            // allow both boolean or string 'true'/'false'
-            const isFeatured = (filters.featured === true || filters.featured === 'true');
-            sql += ` AND is_featured = ?`;
-            values.push(isFeatured);
-        }
-
         sql += ` ORDER BY display_order ASC, created_at DESC`;
 
         const [rows] = await pool.execute(sql, values);
@@ -240,12 +224,7 @@ class ProjectRepository {
         `;
 
         const values = [];
-
-        if (filters.featured !== undefined) {
-            const isFeatured = (filters.featured === true || filters.featured === 'true');
-            sql += ` AND is_featured = ?`;
-            values.push(isFeatured);
-        }
+ 
 
         if (filters.search) {
             sql += ` AND (title LIKE ? OR description LIKE ? OR technologies LIKE ?)`;

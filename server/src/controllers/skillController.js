@@ -31,9 +31,42 @@ next(error);
 
 }
 
+async getById(req,res,next){
+
+try{
+
+const skill=await service.getById(req.params.id);
+
+return res.status(200).json(
+
+new ApiResponse(
+
+200,
+
+skill,
+
+"Skill fetched successfully."
+
+)
+
+);
+
+}catch(error){
+
+next(error);
+
+}
+
+}
+
 async create(req,res,next){
 
 try{
+
+    // If a file was uploaded via multer, attach its public path to body.icon
+    if (req.file) {
+        req.body.icon = `/uploads/images/${req.file.filename}`;
+    }
 
 const id=await service.create(req.body);
 
@@ -62,6 +95,10 @@ next(error);
 async update(req,res,next){
 
 try{
+
+    if (req.file) {
+        req.body.icon = `/uploads/images/${req.file.filename}`;
+    }
 
 await service.update(req.params.id,req.body);
 

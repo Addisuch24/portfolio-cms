@@ -2,44 +2,15 @@ const express=require("express");
 
 const router=express.Router();
 
+const controller = require("../controllers/publicController");
+const contactController = require("../controllers/contactController");
 
-const controller =
-require("../controllers/publicController");
-
-
-
-router.get(
-"/profile",
-controller.getProfile
-);
-
-
-router.get(
-"/projects",
-controller.getProjects
-);
-
-
-
-router.get(
-"/skills",
-controller.getSkills
-);
-
-
-
-router.get(
-"/experiences",
-controller.getExperiences
-);
-
-
-
-router.get(
-"/social-links",
-controller.getSocialLinks
-);
-
-
+router.get("/profile", controller.getProfile);
+router.get("/projects", controller.getProjects);
+router.get("/skills", controller.getSkills);
+router.get("/professional-skills", controller.getProfessionalSkills);
+router.get("/experiences", controller.getExperiences);
+router.get("/social-links", controller.getSocialLinks);
+router.post("/contact", contactController.create);
 
 module.exports=router;

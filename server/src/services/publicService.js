@@ -27,6 +27,12 @@ class PublicService {
 
     }
 
+    async getProfessionalSkills(){
+
+        return await publicRepository.getProfessionalSkills();
+
+    }
+
 
 
     async getExperiences(){

@@ -1,0 +1,114 @@
+body {
+  background: linear-gradient(180deg, #f8fbff 0%, #f4f8ff 100%);
+  color: #212529;
+  font-family: 'Inter', 'Poppins', 'Segoe UI', sans-serif;
+}
+
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #212529 0%, #111827 100%);
+  border-right: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 12px 0 30px rgba(0, 0, 0, 0.18);
+}
+
+.sidebar a {
+  display: block;
+  padding: 0.85rem 1.1rem;
+  margin: 0.35rem 0.8rem;
+  border-radius: 12px;
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  background: linear-gradient(90deg, rgba(13,110,253,0.28), rgba(13,110,253,0.12));
+  color: #fff;
+  transform: translateX(3px);
+}
+
+.sidebar .brand {
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.content {
+  padding: 30px;
+}
+
+.card {
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.07);
+}
+
+.table {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.page-title {
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #0f172a;
+}
+
+/* Login Page Styles */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top left, rgba(13,110,253,0.2), transparent 28%), linear-gradient(135deg, #0f172a 0%, #2563eb 45%, #7c3aed 100%);
+  padding: 20px;
+  margin: 0;
+}
+
+.login-form {
+  background: rgba(255,255,255,0.96);
+  padding: 2.2rem;
+  border-radius: 24px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+  width: 100%;
+  max-width: 430px;
+  backdrop-filter: blur(8px);
+}
+
+.login-form h2 {
+  margin-bottom: 1.4rem;
+  text-align: center;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 0.8rem 0.95rem;
+  margin-bottom: 1rem;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  background: #f8fbff;
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: #484b51;
+  box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.2);
+}
+
+.login-form .btn {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.login-form .btn:hover {
+  transform: translateY(-2px);
+}

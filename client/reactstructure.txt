@@ -1,0 +1,143 @@
+ client/
+│
+├── public/
+│   ├── favicon.ico
+│   ├── logo.png
+│   └── robots.txt
+│
+├── src/
+│
+│   ├── api/
+│   │   └── axios.js
+│   │
+│   ├── assets/
+│   │   ├── images/
+│   │   ├── icons/
+│   │   ├── fonts/
+│   │   └── styles/
+│   │
+│   ├── components/
+│   │   │
+│   │   ├── common/
+│   │   │     ├── Button.jsx
+│   │   │     ├── Input.jsx
+│   │   │     ├── TextArea.jsx
+│   │   │     ├── Select.jsx
+│   │   │     ├── Modal.jsx
+│   │   │     ├── ConfirmDialog.jsx
+│   │   │     ├── Loader.jsx
+│   │   │     ├── DataTable.jsx
+│   │   │     ├── Pagination.jsx
+│   │   │     ├── SearchBar.jsx
+│   │   │     └── EmptyState.jsx
+│   │   │
+│   │   ├── layout/
+│   │   │     ├── Navbar.jsx
+│   │   │     └── Footer.jsx
+│   │   │
+│   │   └── home/
+│   │         ├── Hero.jsx
+│   │         ├── About.jsx
+│   │         ├── Skills.jsx
+│   │         ├── Projects.jsx
+│   │         ├── Experience.jsx
+│   │         ├── Contact.jsx
+│   │         └── SocialLinks.jsx
+│   │
+│   ├── admin/
+│   │   │
+│   │   ├── components/
+│   │   │     │
+│   │   │     ├── Header.jsx
+│   │   │     ├── Sidebar.jsx
+│   │   │     ├── UploadImage.jsx
+│   │   │     │
+│   │   │     └── dashboard/
+│   │   │           ├── StatCard.jsx
+│   │   │           ├── LatestProjects.jsx
+│   │   │           ├── LatestMessages.jsx
+│   │   │           └── QuickStats.jsx
+│   │   │
+│   │   ├── context/
+│   │   │     └── AuthContext.jsx
+│   │   │
+│   │   ├── hooks/
+│   │   │     ├── useAuth.js
+│   │   │     └── useFetch.js
+│   │   │
+│   │   ├── layouts/
+│   │   │     └── AdminLayout.jsx
+│   │   │
+│   │   ├── routes/
+│   │   │     └── ProtectedRoute.jsx
+│   │   │
+│   │   ├── services/
+│   │   │     ├── authService.js
+│   │   │     ├── dashboardService.js
+│   │   │     ├── projectService.js
+│   │   │     ├── skillService.js
+│   │   │     ├── experienceService.js
+│   │   │     ├── socialService.js
+│   │   │     ├── messageService.js
+│   │   │     ├── profileService.js
+│   │   │     └── uploadService.js
+│   │   │
+│   │   └── pages/
+│   │         │
+│   │         ├── Login.jsx
+│   │         ├── Dashboard.jsx
+│   │         │
+│   │         ├── projects/
+│   │         │     ├── ProjectList.jsx
+│   │         │     ├── ProjectForm.jsx
+│   │         │     ├── CreateProject.jsx
+│   │         │     └── EditProject.jsx
+│   │         │
+│   │         ├── skills/
+│   │         │     ├── SkillList.jsx
+│   │         │     ├── SkillForm.jsx
+│   │         │     ├── CreateSkill.jsx
+│   │         │     └── EditSkill.jsx
+│   │         │
+│   │         ├── experiences/
+│   │         │     ├── ExperienceList.jsx
+│   │         │     ├── ExperienceForm.jsx
+│   │         │     ├── CreateExperience.jsx
+│   │         │     └── EditExperience.jsx
+│   │         │
+│   │         ├── social/
+│   │         │     ├── SocialList.jsx
+│   │         │     ├── SocialForm.jsx
+│   │         │     ├── CreateSocial.jsx
+│   │         │     └── EditSocial.jsx
+│   │         │
+│   │         ├── messages/
+│   │         │     └── MessageList.jsx
+│   │         │
+│   │         └── profile/
+│   │               ├── Profile.jsx
+│   │               ├── ProfileForm.jsx
+│   │               ├── ChangePassword.jsx
+│   │               └── UploadResume.jsx
+│   │
+│   ├── pages/
+│   │     └── Home.jsx
+│   │
+│   ├── routes/
+│   │     └── AppRoutes.jsx
+│   │
+│   ├── utils/
+│   │     ├── constants.js
+│   │     ├── helpers.js
+│   │     ├── validators.js
+│   │     └── formatters.js
+│   │
+│   ├── App.jsx
+│   ├── main.jsx
+│   ├── App.css
+│   └── index.css
+│
+├── .env
+├── package.json
+├── vite.config.js
+└── eslint.config.js

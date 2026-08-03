@@ -30,7 +30,7 @@ const upload =
 require("../middlewares/uploadMiddleware");
 
 
-router.patch(
+router.post(
 
 "/image",
 
@@ -39,6 +39,18 @@ authenticate,
 upload.single("image"),
 
 profileController.uploadImage
+
+);
+
+router.post(
+
+"/resume",
+
+authenticate,
+
+upload.single("resume"),
+
+profileController.uploadResume
 
 );
 

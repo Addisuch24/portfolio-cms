@@ -9,51 +9,16 @@ const config = {
   DB_PASSWORD: process.env.DB_PASSWORD,
   DB_NAME: process.env.DB_NAME,
   JWT_SECRET: process.env.JWT_SECRET,
+  CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
+  EMAIL_HOST: process.env.EMAIL_HOST,
+  EMAIL_PORT: process.env.EMAIL_PORT,
+  EMAIL_SECURE: process.env.EMAIL_SECURE,
+  EMAIL_USER: process.env.EMAIL_USER,
+  EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
+  EMAIL_FROM: process.env.EMAIL_FROM,
+  EMAIL_TO: process.env.EMAIL_TO,
 };
 
 module.exports = config;
-///////////////////////////////////////////!SECTION
-const CLOUDINARY_CLOUD_NAME =
-    process.env.CLOUDINARY_CLOUD_NAME;
-
-const CLOUDINARY_API_KEY =
-    process.env.CLOUDINARY_API_KEY;
-
-const CLOUDINARY_API_SECRET =
-    process.env.CLOUDINARY_API_SECRET;
-
-config.CLOUDINARY_CLOUD_NAME =
-    CLOUDINARY_CLOUD_NAME;
-
-config.CLOUDINARY_API_KEY =
-    CLOUDINARY_API_KEY;
-
-config.CLOUDINARY_API_SECRET =
-    CLOUDINARY_API_SECRET;
-    module.exports = {
-    CLOUDINARY_CLOUD_NAME,
-    CLOUDINARY_API_KEY,
-    CLOUDINARY_API_SECRET
-};
-//!SECTION
-const EMAIL_HOST=process.env.EMAIL_HOST;
-const EMAIL_PORT=process.env.EMAIL_PORT;
-const EMAIL_USER=process.env.EMAIL_USER;
-const EMAIL_PASSWORD=process.env.EMAIL_PASSWORD;
-const EMAIL_FROM=process.env.EMAIL_FROM;
-
-config : {
-
-EMAIL_HOST,
-
-EMAIL_PORT,
-
-EMAIL_USER,
-
-EMAIL_PASSWORD,
-
-EMAIL_FROM
-
-};
-
-module.exports=config;

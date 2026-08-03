@@ -3,6 +3,7 @@ require("../services/profileService");
 
 const ApiResponse =
 require("../utils/ApiResponse");
+const ApiError = require("../utils/ApiError");
 
 class ProfileController{
 
@@ -106,6 +107,41 @@ next(error);
 
 }
 
+
+}
+
+async uploadResume(req,res,next){
+
+try{
+
+const result =
+await profileService.uploadResume(
+
+1,
+
+req.file
+
+);
+
+res.status(200).json(
+
+new ApiResponse(
+
+200,
+
+result,
+
+"Resume uploaded successfully"
+
+)
+
+);
+
+}catch(error){
+
+next(error);
+
+}
 
 }
 }

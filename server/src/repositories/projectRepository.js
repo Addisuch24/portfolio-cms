@@ -9,23 +9,27 @@ class ProjectRepository {
             INSERT INTO projects (
                 title,
                 description,
-                image,
+                image_url,
+                image_public_id,
+                technologies,
                 github_url,
                 live_demo_url,
-                technologies,
-                 display_order
+                status,
+                display_order
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
 
         const [result] = await pool.execute(sql, [
             project.title,
             project.description,
-            project.image,
-            project.github_url,
-            project.live_demo_url,
-            project.technologies,
-             project.display_order
+            project.image_url || null,
+            project.image_public_id || null,
+            project.technologies || null,
+            project.github_url || null,
+            project.live_demo_url || null,
+            project.status || 'Draft',
+            project.display_order != null ? project.display_order : 1
         ]);
 
         return result.insertId;
@@ -67,22 +71,26 @@ class ProjectRepository {
             SET
                 title = ?,
                 description = ?,
-                image = ?,
+                image_url = ?,
+                image_public_id = ?,
                 github_url = ?,
                 live_demo_url = ?,
                 technologies = ?,
-                 display_order = ?
+                status = ?,
+                display_order = ?
             WHERE id = ?
         `;
 
         await pool.execute(sql, [
             project.title,
             project.description,
-            project.image,
-            project.github_url,
-            project.live_demo_url,
-            project.technologies,
-             project.display_order,
+            project.image_url || null,
+            project.image_public_id || null,
+            project.github_url || null,
+            project.live_demo_url || null,
+            project.technologies || null,
+            project.status || 'Draft',
+             project.display_order != null ? project.display_order : 1,
             id
         ]);
     }

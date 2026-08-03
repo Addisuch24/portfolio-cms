@@ -9,6 +9,20 @@ class SkillService{
 
     }
 
+    async getById(id){
+
+        const skill = await repository.getById(id);
+
+        if(!skill){
+
+            throw new ApiError(404,"Skill not found.");
+
+        }
+
+        return skill;
+
+    }
+
     async create(data){
 
         return await repository.create(data);

@@ -102,6 +102,28 @@ next(error);
 
 }
 
+async getProfessionalSkills(req,res,next){
+
+try{
+
+const items = await publicService.getProfessionalSkills();
+
+res.status(200).json(
+new ApiResponse(
+200,
+items,
+"Professional skills fetched successfully"
+)
+);
+
+}catch(error){
+
+next(error);
+
+}
+
+}
+
 
 
 

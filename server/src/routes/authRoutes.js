@@ -4,12 +4,13 @@ const router = express.Router();// Create a new router instance using Express to
 
 const authController = require("../controllers/authController");
 
- const {
-    loginValidation 
-    // Import the loginValidation middleware from the authValidator.js file to validate the incoming request data for the login route
+const {
+    loginValidation,
+    changePasswordValidation
 } = require("../validators/authValidator");
 
 const validationMiddleware = require("../middlewares/validationMiddleware");
+const authenticate = require("../middlewares/authMiddleware");
 
 router.post(
     "/login",
@@ -18,7 +19,19 @@ router.post(
 
     validationMiddleware, //!SECTION Apply the validationMiddleware to handle any validation errors that may occur during the login request
 
-    authController. login // Call the login method from the authController to handle the login logic after successful validation
+    authController.login // Call the login method from the authController to handle the login logic after successful validation
+);
+
+router.put(
+    "/change-password",
+
+    authenticate,
+
+    changePasswordValidation,
+
+    validationMiddleware,
+
+    authController.changePassword
 );
 
 module.exports = router;

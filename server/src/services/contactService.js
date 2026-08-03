@@ -8,7 +8,11 @@ class ContactService {
 
         const id = await contactRepository.create(data);
 
-        await emailService.sendContactNotification(data);
+        try {
+            await emailService.sendContactNotification(data);
+        } catch (error) {
+            console.warn("Contact message saved but email notification failed:", error?.message || error);
+        }
 
         return id;
     }

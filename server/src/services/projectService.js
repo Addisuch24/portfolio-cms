@@ -2,7 +2,7 @@ const projectRepository = require("../repositories/projectRepository");
 const ApiError = require("../utils/ApiError");
 const getPagination = require("../utils/pagination");
 const getPaginationMeta = require("../utils/paginationMeta");
-const imageService = require("./imageService");
+const uploadService = require("./uploadService");
 class ProjectService {
 
     async create(project) {
@@ -80,25 +80,12 @@ class ProjectService {
         }
 
         if (project.image_public_id) {
-
-            await imageService.deleteImage(
-                project.image_public_id
-            );
-
+            await uploadService.deleteFile(project.image_public_id);
         }
 
-        const uploaded =
-            await imageService.uploadImage(file.path);
+        const uploaded = await uploadService.uploadFile(file.path, "portfolio/projects");
 
-        await projectRepository.updateProjectImage(
-
-            projectId,
-
-            uploaded.imageUrl,
-
-            uploaded.publicId
-
-        );
+        await projectRepository.updateProjectImage(projectId, uploaded.url, uploaded.publicId);
 
         return uploaded;
 

@@ -7,6 +7,8 @@ const jwt = require("jsonwebtoken");
 // Import the authentication repository
 const authRepository = require("../repositories/authRepository");
 
+const ApiError = require("../utils/ApiError");
+
 // Import application configuration
 const config = require("../config/env");
 
@@ -19,20 +21,25 @@ class AuthService {
     // Find user by email
     const user = await authRepository.findUserByEmail(email);
 
-    // If the user does not exist
     if (!user) {
-      throw new Error("Invalid email or password.");
+      throw new ApiError(401, "Invalid email or password.");
     }
 
-    // Compare plain-text passwords (FOR TESTING ONLY)
-    const isMatch = password === user.password;
+    let isMatch = false;
 
-    // If passwords do not match
+    if (typeof user.password === "string" && user.password.startsWith("$2")) {
+      isMatch = await bcrypt.compare(password, user.password);
+    } else {
+      isMatch = password === user.password;
+
+      if (isMatch) {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        await authRepository.updatePassword(user.id, hashedPassword);
+      }
+    }
+
     if (!isMatch) {
-      throw new Error("Invalid email or password.");
-    }else {
-      // disply login success message
-      console.log("Login successful");
+      throw new ApiError(401, "Invalid email or password.");
     }
 
     // Generate JWT token
@@ -43,7 +50,7 @@ class AuthService {
       },
       config.JWT_SECRET,
       {
-        expiresIn: "1d"
+        expiresIn: "30d"
       }
     );
 
@@ -56,6 +63,28 @@ class AuthService {
         email: user.email,
         role: user.role
       }
+    };
+  }
+
+  async changePassword(userId, currentPassword, newPassword) {
+    const user = await authRepository.findUserById(userId);
+
+    if (!user) {
+      throw new ApiError(404, "User not found.");
+    }
+
+    if (user.password !== currentPassword) {
+      throw new ApiError(400, "Current password is incorrect.");
+    }
+
+    if (!newPassword || newPassword.length < 6) {
+      throw new ApiError(400, "New password must be at least 6 characters.");
+    }
+
+    await authRepository.updatePassword(userId, newPassword);
+
+    return {
+      message: "Password changed successfully."
     };
   }
 }

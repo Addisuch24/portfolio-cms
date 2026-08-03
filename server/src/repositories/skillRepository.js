@@ -40,29 +40,45 @@ class SkillRepository{
 
         category,
 
+        description,
+
         icon,
 
         level,
 
-        sort_order
+        sort_order,
+
+        status
 
         )
 
-        VALUES(?,?,?,?,?)
+        VALUES(?,?,?,?,?,?,?)
 
         `;
 
+        const name = data.name ?? "";
+        const category = data.category ?? "General";
+        const description = data.description ?? null;
+        const icon = data.icon ?? null;
+        const level = (typeof data.level === 'number') ? data.level : (data.level != null ? parseInt(data.level, 10) : 50);
+        const sort_order = (typeof data.sort_order === 'number') ? data.sort_order : (data.sort_order != null ? data.sort_order : 0);
+        const status = data.status ?? "Active";
+
         const [result]=await pool.execute(sql,[
 
-            data.name,
+            name,
 
-            data.category,
+            category,
 
-            data.icon,
+            description,
 
-            data.level,
+            icon,
 
-            data.sort_order
+            level,
+
+            sort_order,
+
+            status
 
         ]);
 
@@ -82,27 +98,43 @@ class SkillRepository{
 
         category=?,
 
+        description=?,
+
         icon=?,
 
         level=?,
 
-        sort_order=?
+        sort_order=?,
+
+        status=?
 
         WHERE id=?
 
         `;
 
+        const name = data.name ?? "";
+        const category = data.category ?? "General";
+        const description = data.description ?? null;
+        const icon = data.icon ?? null;
+        const level = (typeof data.level === 'number') ? data.level : (data.level != null ? parseInt(data.level, 10) : 50);
+        const sort_order = (typeof data.sort_order === 'number') ? data.sort_order : (data.sort_order != null ? data.sort_order : 0);
+        const status = data.status ?? "Active";
+
         await pool.execute(sql,[
 
-            data.name,
+            name,
 
-            data.category,
+            category,
 
-            data.icon,
+            description,
 
-            data.level,
+            icon,
 
-            data.sort_order,
+            level,
+
+            sort_order,
+
+            status,
 
             id
 

@@ -28,13 +28,15 @@ CREATE TABLE IF NOT EXISTS users (
 -- Profile
 -- ==========================================
 
-CREATE TABLE IF NOT EXISTS profiles (
+CREATE TABLE IF NOT EXISTS profile (
     id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(100) NOT NULL,
     profession VARCHAR(100) NOT NULL,
     bio TEXT,
     profile_image VARCHAR(255),
+    profile_image_public_id VARCHAR(255),
     resume_url VARCHAR(255),
+    resume_public_id VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP
@@ -51,11 +53,15 @@ CREATE TABLE skills(
 
     category VARCHAR(100) NOT NULL,
 
+    description TEXT DEFAULT NULL,
+
     icon VARCHAR(255),
 
     level INT NOT NULL,
 
     sort_order INT DEFAULT 0,
+
+    status VARCHAR(20) DEFAULT 'Active',
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
@@ -73,6 +79,7 @@ CREATE TABLE IF NOT EXISTS projects (
     title VARCHAR(255) NOT NULL,
     description TEXT,
     image_url VARCHAR(255),
+    image_public_id VARCHAR(255),
     technologies TEXT,
     github_url VARCHAR(255),
     live_demo_url VARCHAR(255),

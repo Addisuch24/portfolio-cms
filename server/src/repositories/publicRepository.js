@@ -9,8 +9,8 @@ class PublicRepository {
         const sql = `
             SELECT
                 full_name,
-                profession,
-                bio,
+                profession AS title,
+                bio AS about,
                 profile_image,
                 resume_url
             FROM profile
@@ -57,9 +57,11 @@ class PublicRepository {
                 id,
                 name,
                 category,
-                icon
+                description,
+                icon,
+                level
             FROM skills
-            ORDER BY sort_order ASC
+            ORDER BY display_order ASC
         `;
 
 
@@ -70,6 +72,28 @@ class PublicRepository {
     }
 
 
+
+
+    async getProfessionalSkills(){
+
+        const sql = `
+            SELECT
+                id,
+                name,
+                category,
+                description,
+                icon,
+                level
+            FROM skills
+            WHERE category IN ('Professional', 'Professional Skills', 'Soft Skill', 'Soft Skills')
+            ORDER BY display_order ASC
+        `;
+
+        const [rows] = await pool.execute(sql);
+
+        return rows;
+
+    }
 
 
     async getExperiences(){
@@ -94,6 +118,7 @@ class PublicRepository {
 
         const sql = `
             SELECT
+                id,
                 platform,
                 url,
                 icon

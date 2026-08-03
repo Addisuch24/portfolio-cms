@@ -3,6 +3,8 @@ require("../repositories/profileRepository");
 // call the upload service to handle file uploads from the profile service
 const uploadService =
 require("./uploadService");
+const ApiError =
+require("../utils/ApiError");
 
 class ProfileService{
 
@@ -85,6 +87,53 @@ uploaded.publicId
 
 return uploaded;
 
+
+}
+
+async uploadResume(id,file){
+
+const profile =
+await profileRepository.getProfile();
+
+if(!profile){
+
+throw new ApiError(
+404,
+"Profile not found"
+);
+
+}
+
+if(profile.resume_public_id){
+
+await uploadService.deleteFile(
+
+profile.resume_public_id
+
+);
+
+}
+
+const uploaded =
+await uploadService.uploadFile(
+
+file.path,
+
+"portfolio/resumes"
+
+);
+
+await profileRepository.updateResume(
+
+id,
+
+uploaded.url,
+
+uploaded.publicId
+
+);
+
+return uploaded;
 
 }
 }

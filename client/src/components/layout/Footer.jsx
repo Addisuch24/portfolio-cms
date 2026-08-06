@@ -21,16 +21,10 @@ function Footer() {
   return (
     <footer className="footer bg-dark text-white py-5">
       <div className="container">
-        <div className="row">
-          <div className="col-md-6 mb-4 mb-md-0 d-flex align-items-center justify-content-center">
-            <p className="text-muted mb-0 text-center">
-              Building amazing web experiences with modern technologies.
-            </p>
-          </div>
-
-          <div className="col-md-6 d-flex flex-column align-items-center justify-content-center text-center">
+        <div className="row justify-content-center">
+          <div className="col-12 col-md-8 text-center">
             <h5 className="fw-bold mb-3">Connect With Me</h5>
-            <div className="social-links mb-3 d-flex flex-wrap justify-content-center">
+            <div className="social-links mb-4 d-flex flex-wrap justify-content-center mx-auto">
               {socialLinks.map((link) => {
                 const iconClass = link.icon ? `bi bi-${link.icon}` : "bi bi-link-45deg";
 
@@ -40,7 +34,7 @@ function Footer() {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white me-3"
+                    className="text-white"
                     title={link.platform}
                   >
                     <i className={`${iconClass} fs-4`}></i>
@@ -53,8 +47,12 @@ function Footer() {
 
         <hr className="my-4 bg-secondary" />
 
-        <div className="text-center text-muted">
-          <p className="mb-0">© {currentYear} Portfolio CMS. All rights reserved.</p>
+        <div className="row">
+          <div className="col-12 text-center">
+            <p className="text-muted mb-0">
+              Building amazing web experiences with modern technologies.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

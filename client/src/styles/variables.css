@@ -1,23 +1,28 @@
- :root{
+ :root {
+  /* Primary / Brand Colors */
+  --primary: #F1C40F;       /* Mustard Primary */
+  --secondary: #8B5CF6;     /* Purple Secondary */
+  --brand-indigo: #4F46E5;  /* Indigo Primary */
+  --brand-cyan: #20C4F4;    /* Cyan Info */
+  
+  /* Neutral / Base Colors */
+  --dark: #0D010F;          /* Dark */
+  --dark-gray: #1A1A1F;     /* Dark Gray */
+  --medium-gray: #282D35;   /* Medium Gray */
+  --light: #F7F8FA;         /* Off White */
+  --warm-beige: #EDEDE8;     /* Warm Beige */
+  --white: #FFFFFF;         /* White */
+  
+  /* Semantic / Accent Colors */
+  --success: #10B981;       /* Emerald Success */
+  --accent: #FF6B6B;        /* Coral Accent */
+  --warning: #F59E0B;       /* Warning */
+  --danger: #EF4444;        /* Danger */
+  --info: #3B82F6;          /* Info */
+  
+  --card-bg: #FFFFFF;
 
---primary:#0d6efd;
-
---secondary:#6c757d;
-
---success:#198754;
-
---danger:#dc3545;
-
---warning:#ffc107;
-
---dark:#212529;
-
---light:#f8f9fa;
-
---sidebar-width:250px;
-
---transition:.3s;
-
---radius:10px;
-
+  --sidebar-width: 250px;
+  --transition: .3s;
+  --radius: 12px;
 }

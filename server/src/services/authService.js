@@ -42,6 +42,10 @@ class AuthService {
       throw new ApiError(401, "Invalid email or password.");
     }
 
+    if (!config.JWT_SECRET) {
+      throw new Error("JWT_SECRET is not configured. Set JWT_SECRET in server/.env.");
+    }
+
     // Generate JWT token
     const token = jwt.sign(
       {

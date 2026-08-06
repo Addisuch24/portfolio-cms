@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 import StatCard from "../components/dashboard/StatCard";
 import LatestProjects from "../components/dashboard/LatestProjects";
@@ -13,6 +13,8 @@ function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
+
   const fetchDashboard = async () => {
     try {
       setLoading(true);
@@ -20,8 +22,16 @@ function Dashboard() {
       const response = await api.get("/dashboard");
       setDashboard(response.data.data);
     } catch (error) {
-      console.error(error);
-      setError("Failed to load dashboard data");
+      console.error("Dashboard API error:", error);
+      const message =
+        error.response?.data?.message ||
+        error.response?.statusText ||
+        error.message ||
+        "Failed to load dashboard data";
+      setError(message);
+      if (error.response?.status === 401) {
+        navigate("/admin/login");
+      }
     } finally {
       setLoading(false);
     }

@@ -3,6 +3,7 @@ import Modal from './Modal';
 function ConfirmDialog({ 
   show, 
   onHide, 
+  onCancel, 
   onConfirm, 
   title = "Confirm", 
   message = "Are you sure?",
@@ -10,15 +11,17 @@ function ConfirmDialog({
   cancelText = "Cancel",
   variant = "danger"
 }) {
+  const handleCancel = onCancel || onHide;
+
   return (
     <Modal
       show={show}
-      onHide={onHide}
+      onHide={handleCancel}
       title={title}
       size="sm"
       footer={
         <>
-          <button className="btn btn-secondary" onClick={onHide}>
+          <button className="btn btn-secondary" onClick={handleCancel}>
             {cancelText}
           </button>
           <button className={`btn btn-${variant}`} onClick={onConfirm}>

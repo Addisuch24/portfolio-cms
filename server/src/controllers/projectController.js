@@ -8,14 +8,15 @@ const createProject = asyncHandler(async (req, res) => {
 
     const projectData = { ...req.body };
 
-    console.log(`[projectController] createProject called by user=${req.user?.id || 'anon'}; file=${req.file ? req.file.originalname : 'none'}`);
-    console.log('[projectController] projectData keys:', Object.keys(projectData));
+    const imageFiles = Array.isArray(req.files) ? req.files : [];
 
-    // If an image file was uploaded in the multipart request, upload it and attach URLs
-    if (req.file) {
-        const uploaded = await uploadService.uploadFile(req.file.path, "portfolio/projects");
-        projectData.image_url = uploaded.url;
-        projectData.image_public_id = uploaded.publicId;
+    if (imageFiles.length > 0) {
+        const uploadedUrls = [];
+        for (const file of imageFiles) {
+            const uploaded = await uploadService.uploadFile(file.path, "portfolio/projects");
+            uploadedUrls.push(uploaded.url);
+        }
+        projectData.image_url = uploadedUrls.join(",");
     }
 
     const id = await projectService.create(projectData);
@@ -62,10 +63,27 @@ const updateProject = asyncHandler(async (req, res) => {
 
     const projectData = { ...req.body };
 
-    if (req.file) {
-        const uploaded = await uploadService.uploadFile(req.file.path, "portfolio/projects");
-        projectData.image_url = uploaded.url;
-        projectData.image_public_id = uploaded.publicId;
+    const imageFiles = Array.isArray(req.files) ? req.files : [];
+
+    const existingProject = await projectService.getById(req.params.id);
+
+    if (imageFiles.length > 0) {
+        const uploadedUrls = [];
+        for (const file of imageFiles) {
+            const uploaded = await uploadService.uploadFile(file.path, "portfolio/projects");
+            uploadedUrls.push(uploaded.url);
+        }
+
+        const existingUrls = String(existingProject.image_url || "")
+            .split(",")
+            .map((url) => url.trim())
+            .filter(Boolean);
+
+        projectData.image_url = [...existingUrls, ...uploadedUrls].join(",");
+        projectData.image_public_id = null;
+    } else {
+        projectData.image_url = existingProject.image_url;
+        projectData.image_public_id = existingProject.image_public_id;
     }
 
     await projectService.update(req.params.id, projectData);

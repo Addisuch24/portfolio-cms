@@ -17,7 +17,7 @@ router.get("/:id", controller.getProject);
 router.post(
     "/",
     authMiddleware,
-    upload.single("image"),
+    upload.array("images", 6),
     createProjectValidation,
     validationMiddleware,
     controller.createProject
@@ -26,7 +26,7 @@ router.post(
 router.put(
     "/:id",
     authMiddleware,
-    upload.single("image"),
+    upload.array("images", 6),
     createProjectValidation,
     validationMiddleware,
     controller.updateProject

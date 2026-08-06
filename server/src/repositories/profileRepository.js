@@ -10,6 +10,9 @@ class ProfileRepository {
                 full_name,
                 profession AS title,
                 bio AS about,
+                email,
+                phone,
+                address,
                 profile_image,
                 profile_image_public_id,
                 resume_url,
@@ -53,7 +56,10 @@ class ProfileRepository {
             SET
                 full_name = ?,
                 profession = ?,
-                bio = ?
+                bio = ?,
+                email = ?,
+                phone = ?,
+                address = ?
             WHERE id = ?
         `;
 
@@ -71,11 +77,17 @@ class ProfileRepository {
             profile.bio ??
             profile.about ??
             null;
+        const email = data.email ?? profile.email ?? null;
+        const phone = data.phone ?? profile.phone ?? null;
+        const address = data.address ?? profile.address ?? null;
 
         const [result] = await pool.execute(sql, [
             full_name,
             profession,
             bio,
+            email,
+            phone,
+            address,
             id
         ]);
 

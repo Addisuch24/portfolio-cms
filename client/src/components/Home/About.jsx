@@ -6,23 +6,8 @@ function About({ profile }) {
   return (
     <section id="about" className="py-5">
       <div className="container">
-        <div className="row align-items-center g-5">
-          <div className="col-lg-6 mb-4 mb-lg-0">
-            {profileImageUrl && (
-              <div className="about-image-card">
-                <img
-                  src={profileImageUrl}
-                  alt={profile.full_name}
-                  className="img-fluid"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = "/uploads/dummy.jpg";
-                  }}
-                />
-              </div>
-            )}
-          </div>
-          <div className="col-lg-6">
+        <div className="row justify-content-center">
+          <div className="col-lg-10">
             <div className="about-card">
               <h2 className="display-6 fw-bold mb-4">About Me</h2>
               <p className="lead text-muted mb-4">{profile.about}</p>

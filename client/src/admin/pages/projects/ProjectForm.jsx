@@ -16,12 +16,18 @@ function ProjectForm({
     live_demo_url: "",
     status: "Draft",
     image_url: "",
+    images: [],
   });
 
-  const [imagePreview, setImagePreview] = useState(null);
+  const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
 
   useEffect(() => {
     if (initialValues) {
+      const initialImages = String(initialValues.image_url || "")
+        .split(",")
+        .map((url) => url.trim())
+        .filter(Boolean);
+
       setFormData({
         title: initialValues.title || "",
         description: initialValues.description || "",
@@ -30,10 +36,10 @@ function ProjectForm({
         live_demo_url: initialValues.live_demo_url || "",
         status: initialValues.status || "Draft",
         image_url: initialValues.image_url || "",
+        images: [],
       });
-      if (initialValues.image_url) {
-        setImagePreview(initialValues.image_url);
-      }
+
+      setImagePreviewUrls(initialImages);
     }
   }, [initialValues]);
 
@@ -47,13 +53,17 @@ function ProjectForm({
   };
 
   const handleFile = (e) => {
-    const file = e.target.files[0];
-    if (file) {
+    const files = Array.from(e.target.files || []);
+    if (files.length > 0) {
       setFormData((prev) => ({
         ...prev,
-        image: file,
+        images: [...prev.images, ...files],
       }));
-      setImagePreview(URL.createObjectURL(file));
+
+      setImagePreviewUrls((prev) => [
+        ...prev,
+        ...files.map((file) => URL.createObjectURL(file)),
+      ]);
     }
   };
 
@@ -76,8 +86,10 @@ function ProjectForm({
     data.append("live_demo_url", live_demo_url);
     data.append("status", status);
 
-    if (formData.image instanceof File) {
-      data.append("image", formData.image);
+    if (Array.isArray(formData.images) && formData.images.length > 0) {
+      formData.images.forEach((file) => {
+        data.append("images", file);
+      });
     }
 
     onSubmit(data);
@@ -145,26 +157,31 @@ function ProjectForm({
       />
 
       <div className="mb-3">
-        <label htmlFor="image" className="form-label">
-          Project Image
+        <label htmlFor="images" className="form-label">
+          Project Images
         </label>
         <input
           type="file"
+          name="images"
           className="form-control"
-          id="image"
+          id="images"
           accept="image/*"
+          multiple
           onChange={handleFile}
         />
       </div>
 
-      {imagePreview && (
-        <div className="mb-3">
-          <img
-            src={imagePreview}
-            alt="Preview"
-            className="img-thumbnail"
-            style={{ maxWidth: "300px" }}
-          />
+      {imagePreviewUrls.length > 0 && (
+        <div className="mb-3 d-flex flex-wrap gap-2">
+          {imagePreviewUrls.map((src, idx) => (
+            <img
+              key={idx}
+              src={src}
+              alt={`Preview ${idx + 1}`}
+              className="img-thumbnail"
+              style={{ width: 120, height: 120, objectFit: "cover" }}
+            />
+          ))}
         </div>
       )}
 

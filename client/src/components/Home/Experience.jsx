@@ -9,10 +9,10 @@ function Experience({ experiences }) {
   );
 
   return (
-    <section id="experience" className="py-5 bg-light">
+    <section id="experience" className="py-5 experience-section">
       <div className="container">
         <div className="text-center mb-5">
-          <h2 className="display-6 fw-bold mb-2">Experience</h2>
+          <h2 className="display-6 fw-bold mb-2 text-light">Experience</h2>
           <p className="lead text-muted">My professional journey</p>
         </div>
 
@@ -23,8 +23,8 @@ function Experience({ experiences }) {
                 <div key={exp.id} className="experience-item">
                   <div className="d-flex justify-content-between align-items-start">
                     <div className="flex-grow-1">
-                      <h5 className="fw-bold mb-1">{exp.position}</h5>
-                      <h6 className="text-primary mb-2">{exp.company}</h6>
+                      <h5 className="fw-bold mb-1 text-light">{exp.position}</h5>
+                      <h6 className="text-accent mb-2">{exp.company}</h6>
                       <p className="small text-muted mb-2">
                         <i className="bi bi-calendar-event me-1"></i>
                         {new Date(exp.start_date).toLocaleDateString("en-US", {
@@ -55,7 +55,7 @@ function Experience({ experiences }) {
                           </small>
                           <div className="d-flex flex-wrap gap-1">
                             {exp.technologies.split(",").map((tech, idx) => (
-                              <span key={idx} className="badge bg-light text-dark">
+                              <span key={idx} className="badge bg-dark text-light border border-secondary">
                                 {tech.trim()}
                               </span>
                             ))}

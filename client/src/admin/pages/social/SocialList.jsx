@@ -41,8 +41,13 @@ function SocialList() {
       const response = await socialService.getAll();
       setSocials(response.data.data);
     } catch (error) {
-      console.log(error);
-      setToast({ show: true, message: "Failed to load social links", type: "error" });
+      console.log("Social links API error:", error);
+      const message =
+        error.response?.data?.message ||
+        error.response?.statusText ||
+        error.message ||
+        "Failed to load social links";
+      setToast({ show: true, message, type: "error" });
     } finally {
       setLoading(false);
     }

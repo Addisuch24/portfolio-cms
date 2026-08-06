@@ -1,8 +1,11 @@
 import "../../styles/home.css";
 import { resolveAssetUrl } from "../../utils/assetUrls";
+import Typewriter from "../common/Typewriter";
 
 function Hero({ profile }) {
   const profileImageUrl = resolveAssetUrl(profile.profile_image);
+  const nameText = profile.full_name || "Addisu Hirbo";
+  const subtitleText = "Software Engineering Student & Full-Stack Developer";
 
   return (
     <section id="home" className="hero">
@@ -10,8 +13,15 @@ function Hero({ profile }) {
         <div className="row align-items-center g-5">
           <div className="col-lg-6">
             <div className="hero-content">
-              <h1 className="display-4 fw-bold mb-3">{profile.full_name}</h1>
-              <h2 className="h4 mb-4 hero-title">{profile.title}</h2>
+              <h1 className="display-4 fw-bold mb-3">
+                <Typewriter
+                  text={nameText}
+                  typingSpeed={100}
+                  deletingSpeed={60}
+                  pauseTime={2000}
+                />
+              </h1>
+              <h2 className="hero-subtitle mb-4">{subtitleText}</h2>
               <p className="lead mb-4 hero-description">{profile.about}</p>
               <div className="d-flex flex-wrap gap-3">
                 <a href="#projects" className="btn btn-light btn-lg hero-btn-primary">

@@ -62,21 +62,16 @@ function ProfessionalSkillCard({ skill, index }) {
                   <i className={`bi ${resolveIcon(skill.name, skill.icon)} fs-4`}></i>
                 )}
               </div>
-              <h3 className="h5 fw-bold mb-0 text-dark">{skill.name}</h3>
+              <h3 className="h5 fw-bold mb-0" style={{ color: theme.text }}>{skill.name}</h3>
             </div>
 
             {/* Description */}
-            <p className="text-muted text-sm mb-4 leading-relaxed">
+            <p className="text-sm mb-4 leading-relaxed" style={{ color: '#64748b' }}>
               {skill.description}
             </p>
           </div>
 
           {/* Description only, no percentage bar */}
-          <div className="mt-3">
-            <span className="badge rounded-pill bg-secondary-subtle text-secondary fw-semibold px-3 py-2">
-              {skill.level ? `${skill.level}` : "Experienced"}
-            </span>
-          </div>
         </div>
       </div>
     </div>
@@ -94,10 +89,10 @@ function ProfessionalSkills({ professionalSkills = [] }) {
           <span className="badge rounded-pill bg-primary-subtle text-primary fw-bold text-uppercase px-3 py-2 mb-3">
             Core Competencies
           </span>
-          <h2 className="display-6 fw-extrabold text-dark mb-3">
+          <h2 className="display-6 fw-extrabold mb-3" style={{ color: '#1d4ed8' }}>
             Soft Skills
           </h2>
-          <p className="lead text-muted mx-auto" style={{ maxWidth: "720px" }}>
+          <p className="lead mx-auto" style={{ maxWidth: "720px", color: '#64748b' }}>
             Beyond technical expertise, these professional skills help me collaborate effectively, solve complex problems, and deliver high-quality software.
           </p>
         </div>

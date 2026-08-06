@@ -1,4 +1,4 @@
-function DataTable({ columns, data, onEdit, onDelete, loading = false }) {
+function DataTable({ columns, data, onEdit, onDelete, renderActions, loading = false }) {
   if (loading) {
     return (
       <div className="text-center py-5">
@@ -18,27 +18,44 @@ function DataTable({ columns, data, onEdit, onDelete, loading = false }) {
     );
   }
 
+  const getColumnLabel = (col) => col.label || col.header || "";
+
+  const getCellValue = (row, col) => {
+    if (col.render) {
+      return col.render(row);
+    }
+    if (typeof col.accessor === "function") {
+      return col.accessor(row);
+    }
+    if (col.accessor) {
+      return row[col.accessor];
+    }
+    if (col.field) {
+      return row[col.field];
+    }
+    return null;
+  };
+
   return (
     <div className="table-responsive">
       <table className="table table-hover table-striped">
         <thead className="table-light">
           <tr>
             {columns.map((col, index) => (
-              <th key={index}>{col.label}</th>
+              <th key={index}>{getColumnLabel(col)}</th>
             ))}
-            {(onEdit || onDelete) && <th>Actions</th>}
+            {(onEdit || onDelete || renderActions) && <th>Actions</th>}
           </tr>
         </thead>
         <tbody>
           {data.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {columns.map((col, colIndex) => (
-                <td key={colIndex}>
-                  {col.render ? col.render(row) : row[col.field]}
-                </td>
+                <td key={colIndex}>{getCellValue(row, col)}</td>
               ))}
-              {(onEdit || onDelete) && (
+              {(onEdit || onDelete || renderActions) && (
                 <td>
+                  {renderActions && renderActions(row)}
                   {onEdit && (
                     <button 
                       className="btn btn-sm btn-outline-primary me-2"

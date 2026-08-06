@@ -164,7 +164,10 @@ function SkillCategoryCard({ skills, config }) {
       style={{ "--accent-color": config.accentColor, "--badge-bg": config.badgeBg, "--badge-text": config.badgeText }}
     >
       <div className="skill-category-header">
-        <div className="category-card-icon">
+        <div
+          className="category-card-icon"
+          style={{ background: config.badgeBg, color: config.accentColor }}
+        >
           <i className={`bi ${config.icon}`}></i>
         </div>
         <div className="skill-category-header-content">
@@ -191,7 +194,6 @@ function SkillCategoryCard({ skills, config }) {
               <div className="skill-tech-content">
                 <div className="skill-tech-title-area">
                   <h4>{skill.name}</h4>
-                  <span className="skill-category-pill">{config.title}</span>
                 </div>
                 <p className="skill-tech-caption">{description}</p>
               </div>
@@ -231,21 +233,6 @@ function Skills({ skills = [] }) {
 
   return (
     <div id="skills" className="skills-journey-container bg-white">
-      {/* Intro Header */}
-      <div className="skills-journey-hero text-center py-5 border-bottom">
-        <div className="container">
-          <span className="badge rounded-pill bg-primary-subtle text-primary fw-bold text-uppercase px-3 py-2 mb-3">
-            Technology Skillset
-          </span>
-          <h2 className="display-5 fw-extrabold text-dark mb-3">
-            Technical Skills
-          </h2>
-          <p className="lead text-muted mx-auto" style={{ maxWidth: "640px" }}>
-            Quickly scan my strengths by category, with each technical area shown in a clean, recruiter-friendly layout.
-          </p>
-        </div>
-      </div>
-
       <div className="container py-5">
         {activeCategories.length === 0 ? (
           <div className="text-center py-5 text-muted">
@@ -253,11 +240,24 @@ function Skills({ skills = [] }) {
           </div>
         ) : (
           <div className="row g-4">
-            {activeCategories.map((catKey) => {
+            {activeCategories.map((catKey, index) => {
               const config = CATEGORY_CONFIG[catKey] || CATEGORY_CONFIG["Other Technologies"];
+              
+              // Add header before Frontend category
+              const showHeader = catKey === "Frontend";
 
               return (
                 <div key={catKey} className="col-12">
+                  {showHeader && (
+                    <div className="text-center mb-5">
+                      <span className="badge rounded-pill bg-primary-subtle text-primary fw-bold text-uppercase px-3 py-2 mb-3 d-inline-block">
+                        Technology Skillset
+                      </span>
+                      <h2 className="display-5 fw-extrabold text-dark mt-3">
+                        Technical Skills
+                      </h2>
+                    </div>
+                  )}
                   <SkillCategoryCard
                     categoryKey={catKey}
                     skills={fullGroupedSkills[catKey]}

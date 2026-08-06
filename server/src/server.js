@@ -3,6 +3,7 @@ const pool = require("./config/db");
 const path = require("path");
 const fs = require("fs/promises");
 const PORT = process.env.PORT || 5000;
+const DB_NAME = process.env.DB_NAME || "portfolio_cms";
 
 async function ensureContactsTable() {
   const sql = `
@@ -24,7 +25,7 @@ async function ensureContactsTable() {
 async function ensureSkillsSortOrderColumn() {
   const [skillTable] = await pool.execute(
     `SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'skills'`,
-    [process.env.DB_NAME]
+    [DB_NAME]
   );
 
   if (skillTable.length === 0) {
@@ -34,7 +35,7 @@ async function ensureSkillsSortOrderColumn() {
 
   const [columns] = await pool.execute(
     `SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'skills' AND COLUMN_NAME = 'sort_order'`,
-    [process.env.DB_NAME]
+    [DB_NAME]
   );
 
   if (columns.length === 0) {
@@ -74,7 +75,7 @@ async function waitForDatabaseConnection() {
 async function ensureSkillsDescriptionColumn() {
   const [columns] = await pool.execute(
     `SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'skills' AND COLUMN_NAME = 'description'`,
-    [process.env.DB_NAME]
+    [DB_NAME]
   );
 
   if (columns.length === 0) {
@@ -89,7 +90,7 @@ async function ensureSkillsDescriptionColumn() {
 async function ensureSkillsStatusColumn() {
   const [columns] = await pool.execute(
     `SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'skills' AND COLUMN_NAME = 'status'`,
-    [process.env.DB_NAME]
+    [DB_NAME]
   );
 
   if (columns.length === 0) {
@@ -101,6 +102,72 @@ async function ensureSkillsStatusColumn() {
   }
 }
 
+async function ensureProfileEmailColumn() {
+  const [columns] = await pool.execute(
+    `SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'profile' AND COLUMN_NAME = 'email'`,
+    [DB_NAME]
+  );
+
+  if (columns.length === 0) {
+    console.log("⚙️ Adding missing email column to profile table...");
+    await pool.execute(`ALTER TABLE profile ADD COLUMN email VARCHAR(255) AFTER bio`);
+    console.log("✅ Added email column to profile table");
+  } else {
+    console.log("✅ Profile table email column exists");
+  }
+}
+
+async function ensureProfilePhoneColumn() {
+  const [columns] = await pool.execute(
+    `SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'profile' AND COLUMN_NAME = 'phone'`,
+    [DB_NAME]
+  );
+
+  if (columns.length === 0) {
+    console.log("⚙️ Adding missing phone column to profile table...");
+    await pool.execute(`ALTER TABLE profile ADD COLUMN phone VARCHAR(20) AFTER email`);
+    console.log("✅ Added phone column to profile table");
+  } else {
+    console.log("✅ Profile table phone column exists");
+  }
+}
+
+async function ensureProfileAddressColumn() {
+  const [columns] = await pool.execute(
+    `SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'profile' AND COLUMN_NAME = 'address'`,
+    [DB_NAME]
+  );
+
+  if (columns.length === 0) {
+    console.log("⚙️ Adding missing address column to profile table...");
+    await pool.execute(`ALTER TABLE profile ADD COLUMN address VARCHAR(255) AFTER phone`);
+    console.log("✅ Added address column to profile table");
+  } else {
+    console.log("✅ Profile table address column exists");
+  }
+}
+
+async function ensureProfileDataPopulated() {
+  try {
+    const [profiles] = await pool.execute(
+      `SELECT id, email, phone, address FROM profile WHERE (email IS NULL OR email = '') AND (phone IS NULL OR phone = '') AND (address IS NULL OR address = '') LIMIT 1`
+    );
+
+    if (profiles.length > 0) {
+      console.log("⚙️ Populating missing profile data...");
+      await pool.execute(
+        `UPDATE profile SET email = ?, phone = ?, address = ? WHERE id = ?`,
+        ['addis@gmail.com', '+1 (555) 123-4567', 'San Francisco, CA', profiles[0].id]
+      );
+      console.log("✅ Profile data populated with sample values");
+    } else {
+      console.log("✅ Profile data is already complete");
+    }
+  } catch (error) {
+    console.error("⚠️ Error checking profile data:", error.message);
+  }
+}
+
 async function startServer() {
   try {
     await waitForDatabaseConnection();
@@ -108,6 +175,10 @@ async function startServer() {
     await ensureSkillsSortOrderColumn();
     await ensureSkillsDescriptionColumn();
     await ensureSkillsStatusColumn();
+    await ensureProfileEmailColumn();
+    await ensureProfilePhoneColumn();
+    await ensureProfileAddressColumn();
+    await ensureProfileDataPopulated();
   } catch (error) {
     console.error("❌ Database connection failed after retries:", error);
     console.warn("⚠️ Starting server without database connection. API routes that require the database will return errors until the database is available.");

@@ -11,6 +11,9 @@ class PublicRepository {
                 full_name,
                 profession AS title,
                 bio AS about,
+                email,
+                phone,
+                address,
                 profile_image,
                 resume_url
             FROM profile

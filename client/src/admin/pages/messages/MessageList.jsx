@@ -56,8 +56,13 @@ function MessageList() {
       setMessages(response.data.data);
       setFiltered(response.data.data);
     } catch (err) {
-      console.log(err);
-      setToast({ show: true, message: "Failed to load messages", type: "error" });
+      console.log("Messages API error:", err);
+      const message =
+        err.response?.data?.message ||
+        err.response?.statusText ||
+        err.message ||
+        "Failed to load messages";
+      setToast({ show: true, message, type: "error" });
     } finally {
       setLoading(false);
     }
@@ -153,7 +158,7 @@ function MessageList() {
       <Modal
         show={viewModal.show}
         title="Message Details"
-        onClose={() => setViewModal({ show: false, message: null })}
+        onHide={() => setViewModal({ show: false, message: null })}
       >
         {viewModal.message && (
           <div>
@@ -190,7 +195,7 @@ function MessageList() {
         title="Delete Message"
         message="Are you sure you want to delete this message? This action cannot be undone."
         onConfirm={handleDelete}
-        onCancel={() => setConfirmDialog({ show: false, id: null })}
+        onHide={() => setConfirmDialog({ show: false, id: null })}
       />
 
       <Toast

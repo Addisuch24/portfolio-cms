@@ -33,6 +33,7 @@ function LatestMessages({ messages }) {
                 <th>Subject</th>
                 <th>Status</th>
                 <th>Date</th>
+                <th className="text-end">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -49,6 +50,11 @@ function LatestMessages({ messages }) {
                     </Badge>
                   </td>
                   <td>{new Date(message.created_at).toLocaleDateString()}</td>
+                  <td className="text-end">
+                    <Link to="/admin/messages" className="btn btn-sm btn-outline-primary">
+                      View
+                    </Link>
+                  </td>
                 </tr>
               ))}
             </tbody>

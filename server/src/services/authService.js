@@ -77,7 +77,18 @@ class AuthService {
       throw new ApiError(404, "User not found.");
     }
 
-    if (user.password !== currentPassword) {
+    // Verify current password (handle both hashed and plain text)
+    let isMatch = false;
+
+    if (typeof user.password === "string" && user.password.startsWith("$2")) {
+      // Password is hashed with bcrypt
+      isMatch = await bcrypt.compare(currentPassword, user.password);
+    } else {
+      // Password is plain text (legacy)
+      isMatch = currentPassword === user.password;
+    }
+
+    if (!isMatch) {
       throw new ApiError(400, "Current password is incorrect.");
     }
 
@@ -85,7 +96,9 @@ class AuthService {
       throw new ApiError(400, "New password must be at least 6 characters.");
     }
 
-    await authRepository.updatePassword(userId, newPassword);
+    // Hash the new password before saving
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    await authRepository.updatePassword(userId, hashedNewPassword);
 
     return {
       message: "Password changed successfully."

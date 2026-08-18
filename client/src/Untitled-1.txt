@@ -1,0 +1,3 @@
+# 
+
+{"success":true,"statusCode":200,"message":"Skills fetched successfully","data":[{"id":1,"name":"JavaScript","category":"Frontend","icon":"javascript","level":90},{"id":11,"name":"skill 1","category":"Backend","icon":null,"level":55},{"id":12,"name":"kotlin","category":"Frontend","icon":null,"level":80},{"id":2,"name":"React","category":"Frontend","icon":"react","level":85},{"id":3,"name":"Node.js","category":"Backend","icon":"node","level":80},{"id":4,"name":"Express","category":"Backend","icon":"server","level":85},{"id":5,"name":"MySQL","category":"Database","icon":"database","level":75}]}
